@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Privacy Policy') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('How Neerodai Trust collects, uses and protects your personal information when you visit our website or donate.'))
 
 @section('content')
 @include('partials.legal-page', [

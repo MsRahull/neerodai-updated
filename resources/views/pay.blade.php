@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Donate') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Donate securely to Neerodai Trust via Razorpay (UPI, cards, net banking). Your gift provides meals and care for elders. 80G receipts available.'))
 
 @section('content')
 

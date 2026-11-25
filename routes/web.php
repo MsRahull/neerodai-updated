@@ -8,6 +8,7 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\SitemapController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,6 +32,7 @@ Route::view('/privacy', 'privacy')->name('privacy');
 Route::view('/terms', 'terms')->name('terms');
 Route::view('/contact', 'contact')->name('contact');
 Route::get('/donate', fn () => redirect(url('/pay'), 301))->name('donate');
+Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
 
 Route::get('/blogs', [BlogController::class, 'index'])->name('blogs.index');
 Route::get('/blogs/{slug}', [BlogController::class, 'show'])->name('blogs.show');
@@ -58,6 +60,10 @@ Route::post('/verify-payment', [PaymentController::class, 'paymentSuccess'])
 */
 
 Route::prefix('admin')->group(function () {
+    // /admin itself: logged-in admins land on the dashboard, everyone else is sent to the login page
+    // (the auth:admin middleware on the dashboard does that redirect).
+    Route::get('/', fn () => redirect()->route('admin.dashboard'))->name('admin.home');
+
     Route::middleware('guest:admin')->group(function () {
         Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
         Route::post('login', [AdminAuthController::class, 'login'])

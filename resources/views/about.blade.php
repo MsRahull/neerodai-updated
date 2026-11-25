@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('About Us') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Learn about Neerodai Trust: our founder, our mission of feeding and caring for the elderly, and the people behind our work.'))
 
 @section('content')
 

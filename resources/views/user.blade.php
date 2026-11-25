@@ -6,7 +6,33 @@
 
     <title>@yield('title', 'Neerodai Trust')</title>
 
-    <link rel="icon" href="{{ asset('favicon.ico') }}">
+    {{-- SEO + social sharing previews (WhatsApp, Facebook, X). Pages override with
+         @section('meta_description'), @section('og_image') and @section('og_type').
+         Section values arrive already HTML-escaped by Blade, so they are printed with {!! !!} (not escaped twice). --}}
+    @php
+        $metaTitle = trim($__env->yieldContent('title', 'Neerodai Trust'));
+        $metaDesc  = trim($__env->yieldContent('meta_description', __('Neerodai Trust provides daily meals, care and dignity to elderly people in need. Support our mission with a donation.')));
+        $metaImage = trim($__env->yieldContent('og_image', asset('user/frontend/SLIDER2.jpg')));
+        $canonical = url()->current();
+    @endphp
+    <meta name="description" content="{!! $metaDesc !!}">
+    <link rel="canonical" href="{{ $canonical }}">
+    <meta property="og:site_name" content="Neerodai Trust">
+    <meta property="og:type" content="@yield('og_type', 'website')">
+    <meta property="og:title" content="{!! $metaTitle !!}">
+    <meta property="og:description" content="{!! $metaDesc !!}">
+    <meta property="og:url" content="{{ $canonical }}">
+    <meta property="og:image" content="{!! $metaImage !!}">
+    <meta property="og:locale" content="{{ app()->getLocale() === 'ta' ? 'ta_IN' : 'en_IN' }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{!! $metaTitle !!}">
+    <meta name="twitter:description" content="{!! $metaDesc !!}">
+    <meta name="twitter:image" content="{!! $metaImage !!}">
+    <meta name="theme-color" content="#12823f">
+
+    <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="48x48">
+    <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="{{ asset('apple-touch-icon.png') }}">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">

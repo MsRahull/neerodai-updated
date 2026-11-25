@@ -1,6 +1,11 @@
 @extends('user')
 
 @section('title', $blog->display_title . ' - ' . __('Neerodai Trust'))
+@section('meta_description', \Illuminate\Support\Str::limit(trim(preg_replace('/\s+/u', ' ', strip_tags($blog->display_short_description ?: $blog->display_content))), 160))
+@section('og_type', 'article')
+@if($blog->image_url)
+    @section('og_image', $blog->image_url)
+@endif
 
 @php
     // Split on blank lines into paragraphs; single line breaks are kept inside a paragraph.
@@ -63,7 +68,7 @@
                             <div class="col-sm-6 col-md-4">
                                 <a href="{{ route('blogs.show', $r->slug) }}" class="bs-related" lang="{{ $r->shown_locale }}">
                                     @if($r->image_url)
-                                        <img src="{{ $r->image_url }}" alt="" loading="lazy">
+                                        <img src="{{ $r->image_url }}" alt="{{ $r->display_title }}" loading="lazy">
                                     @endif
                                     <span>{{ $r->display_title }}</span>
                                 </a>

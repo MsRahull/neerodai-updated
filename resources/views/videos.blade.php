@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Videos') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Watch videos of Neerodai Trust\'s work serving meals and care to elderly people.'))
 
 @section('content')
 
@@ -134,7 +135,7 @@
                                         @if($id)
                                             {{-- Light preview: the real player loads only on click (much faster page) --}}
                                             <button type="button" class="vd-yt" data-yt="{{ $id }}" aria-label="{{ __('Play video') }} {{ $video->title ?? '' }}">
-                                                <img src="https://i.ytimg.com/vi/{{ $id }}/hqdefault.jpg" alt="" loading="lazy">
+                                                <img src="https://i.ytimg.com/vi/{{ $id }}/hqdefault.jpg" alt="{{ filled($video->title ?? null) ? $video->title : __('Neerodai Trust video') }}" loading="lazy">
                                                 <span class="vd-play"><i class="bi bi-play-fill"></i></span>
                                             </button>
                                         @else

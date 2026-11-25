@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Contact Us') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Contact Neerodai Trust by phone, WhatsApp, email or the contact form to volunteer, donate or ask a question.'))
 
 @section('content')
 

@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Terms & Conditions') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Terms and conditions for using the Neerodai Trust website and making donations.'))
 
 @section('content')
 @include('partials.legal-page', [

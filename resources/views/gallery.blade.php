@@ -1,6 +1,7 @@
 @extends('user')
 
 @section('title', __('Gallery') . ' - ' . __('Neerodai Trust'))
+@section('meta_description', __('Photos from Neerodai Trust\'s meal distributions, events and everyday care for elderly people.'))
 
 @section('content')
 
@@ -80,7 +81,7 @@
                     <figure class="gl-card">
                         <a href="{{ $src }}" class="gl-thumb" data-index="{{ $loop->index }}"
                            data-caption="{{ $title ?? '' }}" aria-label="{{ __('Open photo') }} {{ $loop->iteration }}">
-                            <img src="{{ $src }}" alt="{{ $title ?? __('Neerodai Trust gallery photo') }}" loading="lazy">
+                            <img src="{{ $src }}" alt="{{ filled($title) ? $title : __('Neerodai Trust gallery photo') }}" loading="lazy">
                             <span class="gl-zoom"><i class="bi bi-arrows-angle-expand"></i></span>
                         </a>
                         @if($title)
@@ -138,7 +139,7 @@
     <button type="button" class="gl-lb-btn gl-lb-close" aria-label="{{ __('Close') }}"><i class="bi bi-x-lg"></i></button>
     <button type="button" class="gl-lb-btn gl-lb-prev" aria-label="{{ __('Previous') }}"><i class="bi bi-chevron-left"></i></button>
     <figure>
-        <img src="" alt="">
+        <img src="" alt="{{ __('Neerodai Trust gallery photo') }}">
         <figcaption></figcaption>
     </figure>
     <button type="button" class="gl-lb-btn gl-lb-next" aria-label="{{ __('Next') }}"><i class="bi bi-chevron-right"></i></button>
