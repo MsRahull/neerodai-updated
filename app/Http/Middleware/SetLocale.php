@@ -5,21 +5,17 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
+
 class SetLocale
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
+    public const SUPPORTED = ['en', 'ta'];
+
     public function handle(Request $request, Closure $next): Response
     {
-         $locale = Session::get('locale', config('app.locale'));
+        $locale = $request->session()->get('locale', config('app.locale'));
 
-        // Set the application locale
-        App::setLocale($locale);
+        app()->setLocale(in_array($locale, self::SUPPORTED, true) ? $locale : config('app.locale'));
+
         return $next($request);
     }
 }

@@ -2,26 +2,24 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Session;
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-            App::setLocale(Session::get('locale', config('app.locale')));
+        // The locale is set per request by App\Http\Middleware\SetLocale
+        // (the session is not available yet at this point).
 
+        // Behind the host's HTTPS proxy, make sure generated links use https.
+        if ($this->app->environment('production')) {
+            URL::forceScheme('https');
+        }
     }
 }

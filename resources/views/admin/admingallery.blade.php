@@ -13,7 +13,7 @@
 
     <div class="row g-4">
         {{-- Left: Add Image --}}
-        <div class="col-12 col-md-4">
+        <div class="col-12 col-xl-4">
             <div class="card shadow-sm p-3 h-100">
                 <h5 class="mb-3">Add New Image</h5>
 
@@ -31,7 +31,7 @@
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label">Image Flag</label>
+                        <label class="form-label">Show in Gallery</label>
                         <select name="imageflag" class="form-select">
                             <option value="0">No</option>
                             <option value="1">Yes</option>
@@ -54,7 +54,7 @@
         </div>
 
         {{-- Right: Table --}}
-        <div class="col-12 col-md-8">
+        <div class="col-12 col-xl-8">
             <div class="card shadow-sm p-3">
                 <h5 class="mb-3">Gallery Records</h5>
                 <div class="table-responsive">
@@ -63,7 +63,7 @@
                             <tr>
                                 <th style="width: 60px;">ID</th>
                                 <th style="width: 120px;">Image</th>
-                                <th>Dashboard Flag</th>
+                                <th>Show in Gallery</th>
                                 <th>Home Flag</th>
                                 <th style="width: 160px;">Actions</th>
                             </tr>
@@ -143,7 +143,7 @@
 
                                                     <div class="row g-3">
                                                         <div class="col-md-6">
-                                                            <label class="form-label">Image Flag</label>
+                                                            <label class="form-label">Show in Gallery</label>
                                                             <select name="imageflag" class="form-select">
                                                                 <option value="0" {{ $gallery->imageflag ? '' : 'selected' }}>No</option>
                                                                 <option value="1" {{ $gallery->imageflag ? 'selected' : '' }}>Yes</option>

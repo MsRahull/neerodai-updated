@@ -1,0 +1,9 @@
+# The Laravel application folder must never be served directly.
+# public_html/index.php loads it from disk; browsers have no reason to reach it.
+<IfModule mod_authz_core.c>
+    Require all denied
+</IfModule>
+<IfModule !mod_authz_core.c>
+    Order allow,deny
+    Deny from all
+</IfModule>

@@ -1,6 +1,6 @@
 @extends('user')
 
-@section('title', 'Blog - Neerodai')
+@section('title', 'Blog - Neerodai Trust')
 
 @section('content')
 <section class="blog-section py-5">
@@ -12,8 +12,8 @@
 <div class="col-lg-4 col-md-6">
   <div class="blog-card shadow-lg rounded-4 overflow-hidden h-100">
     <div class="blog-img">
-      <img src="http://localhost/dow-img/blog1.jpg" 
-           alt="Elderly Care" class="img-fluid">
+        <img src="{{ asset('user/frontend/blog1.jpg') }}"
+               class="img-fluid"alt="Community Support">
     </div>
     <div class="p-4 d-flex flex-column">
       <h5 class="fw-bold text-dark mb-2">How Neerodai is Supporting the Elderly</h5>
@@ -30,8 +30,8 @@
 <div class="col-lg-4 col-md-6">
   <div class="blog-card shadow-lg rounded-4 overflow-hidden h-100">
     <div class="blog-img">
-      <img src="http://localhost/dow-img/blog2.jpg" 
-           alt="Community Support" class="img-fluid">
+           <img src="{{ asset('user/frontend/blog2.jpg') }}"
+               class="img-fluid"alt="Community Support">
     </div>
     <div class="p-4 d-flex flex-column">
       <h5 class="fw-bold text-dark mb-2">Community Efforts to Make a Difference</h5>
@@ -48,8 +48,8 @@
 <div class="col-lg-4 col-md-6">
   <div class="blog-card shadow-lg rounded-4 overflow-hidden h-100">
     <div class="blog-img">
-      <img src="http://localhost/dow-img/blog3.jpg" 
-           alt="Food Donations" class="img-fluid">
+         <img src="{{ asset('user/frontend/blog3.jpg') }}"
+               class="img-fluid"alt="Community Support">
     </div>
     <div class="p-4 d-flex flex-column">
       <h5 class="fw-bold text-dark mb-2">Meals of Love – Feeding with Care</h5>

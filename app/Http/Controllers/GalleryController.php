@@ -2,65 +2,58 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Gallery;
+use App\Support\PublicUpload;
+use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
+    private const DIR = 'uploads/gallery';
+
     public function index()
     {
-        $galleries = Gallery::latest()->paginate(3);
-        
+        $galleries = Gallery::latest()->paginate(12);
+
         return view('admin.admingallery', compact('galleries'));
     }
 
+    // Public gallery: only images marked visible
     public function viewindex()
     {
-        $galleries = Gallery::latest()->paginate(12);
-        
+        $galleries = Gallery::where('imageflag', 1)->latest()->paginate(12);
+
         return view('gallery', compact('galleries'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'image' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
-            'imageflag' => 'required|in:0,1',
-            'homeflag' => 'required|in:0,1',
-        ]);
-
-        // Upload image
-        $imageName = time() . '.' . $request->image->extension();
-        $request->image->move(public_path('uploads/gallery'), $imageName);
-
-        // Insert into DB
-        $gallery = new Gallery();
-        $gallery->image = $imageName;
-        $gallery->imageflag = $request->imageflag;  // ✅ save
-        $gallery->homeflag = $request->homeflag;    // ✅ save
-        $gallery->save();
-
-        return redirect()->route('gallery.index')->with('success', 'Image uploaded successfully');
-    }
-
-     public function update(Request $request, Gallery $gallery)
-    {
-        $request->validate([
-            'image'     => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+            'image'     => 'required|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
             'imageflag' => 'required|in:0,1',
             'homeflag'  => 'required|in:0,1',
         ]);
 
-        // Replace image if a new file was uploaded
-        if ($request->hasFile('image')) {
-            $oldPath = public_path('uploads/gallery/' . $gallery->image);
-            if (is_file($oldPath)) {
-                @unlink($oldPath);
-            }
+        Gallery::create([
+            'image'     => PublicUpload::store($request->file('image'), self::DIR, PublicUpload::IMAGE_EXTENSIONS),
+            'imageflag' => $request->imageflag,
+            'homeflag'  => $request->homeflag,
+        ]);
 
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('uploads/gallery'), $imageName);
-            $gallery->image = $imageName;
+        return redirect()->route('gallery.index')->with('success', 'Image uploaded successfully');
+    }
+
+    public function update(Request $request, Gallery $gallery)
+    {
+        $request->validate([
+            'image'     => 'nullable|image|mimes:jpg,jpeg,png,gif,webp|max:2048',
+            'imageflag' => 'required|in:0,1',
+            'homeflag'  => 'required|in:0,1',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $newImage = PublicUpload::store($request->file('image'), self::DIR, PublicUpload::IMAGE_EXTENSIONS);
+            PublicUpload::delete(self::DIR, $gallery->image);
+            $gallery->image = $newImage;
         }
 
         $gallery->imageflag = $request->imageflag;
@@ -70,18 +63,11 @@ class GalleryController extends Controller
         return redirect()->route('gallery.index')->with('success', 'Image updated successfully');
     }
 
-    // NEW: destroy
     public function destroy(Gallery $gallery)
     {
-        $path = public_path('uploads/gallery/' . $gallery->image);
-        if (is_file($path)) {
-            @unlink($path);
-        }
-
+        PublicUpload::delete(self::DIR, $gallery->image);
         $gallery->delete();
 
         return redirect()->route('gallery.index')->with('success', 'Image deleted successfully');
     }
-
-
 }

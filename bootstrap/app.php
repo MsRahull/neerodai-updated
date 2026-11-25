@@ -15,6 +15,10 @@ $app = new Illuminate\Foundation\Application(
     $_ENV['APP_BASE_PATH'] ?? dirname(__DIR__)
 );
 
+// The app lives in public_html/neerodai and public_html itself is the web root,
+// so uploads and asset() files must resolve to public_html, not neerodai/public.
+$app->usePublicPath(dirname(__DIR__, 2));
+
 /*
 |--------------------------------------------------------------------------
 | Bind Important Interfaces

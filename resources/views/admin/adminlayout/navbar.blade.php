@@ -1,52 +1,32 @@
-<nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark custom-header">
-    <a class="navbar-brand ps-3" href="{{ url('admin/dashboard') }}">Neerodai Admin</a>
-    
-    <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" 
-            id="sidebarToggle" href="#!">
+{{-- resources/views/admin/adminlayout/navbar.blade.php --}}
+<nav class="sb-topnav navbar navbar-expand na-topbar">
+    <button class="na-icon-btn" id="sidebarToggle" type="button" aria-label="Toggle menu">
         <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Spacer pushes content to right -->
-    <div class="ms-auto me-3 d-flex align-items-center">
-        <form method="POST" action="{{ url('admin/logout') }}">
+    <div class="na-navbar-title">
+        <strong>Admin For Neerodai</strong>
+    </div>
+
+    <div class="ms-auto d-flex align-items-center gap-3">
+
+        {{-- Notifications: contact messages not replied to yet --}}
+        @php $pendingContacts = \App\Models\Contact::whereNull('replied_at')->count(); @endphp
+        <a href="{{ route('contacts.index', ['status' => 'pending']) }}" class="na-icon-btn na-bell"
+           title="{{ $pendingContacts }} message(s) waiting for reply"
+           aria-label="{{ $pendingContacts }} contact message(s) waiting for reply">
+            <i class="far fa-bell"></i>
+            @if($pendingContacts > 0)
+                <span class="na-bell-badge">{{ $pendingContacts > 99 ? '99+' : $pendingContacts }}</span>
+            @endif
+        </a>
+
+        <form method="POST" action="{{ url('admin/logout') }}" class="m-0">
             @csrf
-            <button type="submit" class="btn btn-danger btn-sm">Logout</button>
+            <button type="submit" class="na-logout">
+                <i class="fas fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </button>
         </form>
     </div>
 </nav>
-<style>
-    .custom-header {
-    background-color: #002244 !important;
-}
-.sb-sidenav-dark{
-    background-color: #163656 !important;
-}
-.sb-sidenav-dark .sb-sidenav-menu .nav-link{
-    color: #ffffffff !important;
-}
-.sb-sidenav-dark .sb-sidenav-menu .sb-sidenav-menu-heading{
-        color: #ffffffff !important;
-
-}
-.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon{
-            color: #ffffffff !important;
-
-}
-.sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-sidenav-collapse-arrow{
-                color: #ffffffff !important;
-
-}
-.sb-sidenav-dark .sb-sidenav-footer{
-                    background-color: #002244 !important;
-                    
-
-}
-.btn-danger{
-    color: #163656 !important;
-    border: 1px solid #163656 !important;
-    background-color: white !important;
-}
-.sb-topnav.navbar-dark #sidebarToggle{
-    color: white !important;
-}
-</style>

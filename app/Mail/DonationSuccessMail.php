@@ -2,63 +2,28 @@
 
 namespace App\Mail;
 
+use App\Models\Donation;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-use App\Models\Donation;
-
 class DonationSuccessMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $donation;
-
-
-    /**
-     * Create a new message instance.
-     */
-    public function __construct(Donation $donation)
+    public function __construct(public Donation $donation)
     {
-        $this->donation = $donation;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
-        return new Envelope(
-            subject: 'Donation Success Mail',
-        );
+        return new Envelope(subject: 'Thank you for your donation!');
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
-        return new Content(
-            markdown: 'emails.donation_success',
-        );
-    }
-
-    /**
-     * Get the attachments for the message.
-     *
-     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
-     */
-    public function attachments(): array
-    {
-        return [];
-    }
-
-     public function build()
-    {
-        return $this->subject('Thank you for your donation!')
-                    ->markdown('emails.donation_success');
+        return new Content(markdown: 'emails.donation_success');
     }
 }

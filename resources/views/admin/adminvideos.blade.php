@@ -12,7 +12,7 @@
 
     <div class="row g-4">
         {{-- Add New Video --}}
-        <div class="col-md-4">
+        <div class="col-12 col-xl-4">
             <div class="card p-3 shadow-sm">
                 <h5>Add New Video</h5>
                 <form action="{{ route('videos.store') }}" method="POST" enctype="multipart/form-data">
@@ -57,9 +57,10 @@
         </div>
 
         {{-- Video List --}}
-        <div class="col-md-8">
+        <div class="col-12 col-xl-8">
             <div class="card p-3 shadow-sm">
                 <h5>Video Records</h5>
+                <div class="table-responsive">
                 <table class="table table-bordered table-hover align-middle">
                     <thead class="table-dark text-center">
                         <tr>
@@ -229,6 +230,7 @@
                         @endforelse
                     </tbody>
                 </table>
+                </div>
 
                 <div class="d-flex justify-content-center mt-3">
                     {{ $videos->links('pagination::bootstrap-5') }}

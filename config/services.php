@@ -31,4 +31,20 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    /*
+    | Razorpay. Read with config('services.razorpay.*') — never env() in app code,
+    | because env() returns null once `php artisan config:cache` has been run.
+    | RAZORPAY_KEY / RAZORPAY_SECRET are the older single-key names, kept as fallback.
+    */
+    'razorpay' => (function () {
+        $mode = env('RAZORPAY_MODE', 'test') === 'live' ? 'live' : 'test';
+        $prefix = $mode === 'live' ? 'RAZORPAY_LIVE_KEY_' : 'RAZORPAY_TEST_KEY_';
+
+        return [
+            'mode'   => $mode,
+            'key'    => env($prefix . 'ID') ?: env('RAZORPAY_KEY'),
+            'secret' => env($prefix . 'SECRET') ?: env('RAZORPAY_SECRET'),
+        ];
+    })(),
+
 ];
